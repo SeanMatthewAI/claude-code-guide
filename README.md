@@ -120,7 +120,6 @@ claude --dangerously-skip-permissions
 ## 📁 Repository Contents
 
 - Sample CLAUDE.md file
-- `configs/` - Permission templates and settings
 - `agents/` - Custom subagent examples (coming in future episodes)
 - `commands/` - Custom slash command implementations (coming in future episodes)
 
