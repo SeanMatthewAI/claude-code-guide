@@ -1,10 +1,10 @@
-# Claude Code Tips & Best Practices 
+# Coding Agent Tips & Best Practices 
 
-Welcome to the companion repository for my **Claude Code Essentials Series** on YouTube! This repo contains examples, configurations, and best practices for using Claude Code.  You can find all my videos at: https://www.youtube.com/@SeanMatthewAI
+Welcome to the companion repository for my **AI Coding Fundamentals Series** on YouTube! This repo contains examples, configurations, and best practices for using Claude Code (and other AI coding agents).  You can find all my videos at: https://www.youtube.com/@SeanMatthewAI
 
 ## 📺 Tutorial Series
 
-This repository corresponds to my Claude Code essentials series on YouTube. Each video focuses on specific techniques to improve your development workflow and get the most out of Claude Code.
+This repository corresponds to my coding agent fundamentals series on YouTube. Each video focuses on specific techniques to improve your development workflow and get the most out of Claude Code and other AI coding agents.
 
 ### Episode 1: Foundation Essentials
 - **CLAUDE.md Optimization**: How to create effective project memory
@@ -117,9 +117,84 @@ claude --dangerously-skip-permissions
 
 ⚠️ **Warning**: If using YOLO mode, it is recommended that you containerize your Claude Code environment with Docker for safety. See [Anthropic's containerization guide](https://docs.anthropic.com/en/docs/claude-code/devcontainer).
 
+### 3. Plan Correctly
+
+The PRD/Plan/Tasks Framework helps you turn your idea into an app more effectively by giving the AI coding agent a project plan and system to excute the plan. This framework separates your project's core requirements, architecture, and tasks into distinct files to manage context efficiently and give you a better output.
+
+#### The Process:
+
+**Step 1: Create a PRD**
+Start by creating a Product Requirements Document (PRD) with your preferred AI chat interface (Claude, ChatGPT, Gemini, Grok, etc.). Brainstorm thoroughly about what you want to build, and draft a 1-2 paragraph prompt describing what you want.  Ask the AI interface to generate a detailed PRD.
+
+**Step 2: Generate Core Files**
+From your PRD, ask AI to generate three essential files:
+- **CLAUDE.md**: Distilled important details from the PRD
+- **PLANNING.md**: Vision, architecture, technology stack, and required tools
+- **TASKS.md**: Bullet-point tasks divided into milestones
+
+Use these prompts:
+- **Prompt to create CLAUDE.md**: "Using the PRD and the attached example CLAUDE.md file, generate a CLAUDE.md file for this project."  Use an example CLAUDE.md from this repo to give guidance about how to structure the file.
+- **Prompt to create PLANNING.md**: "Create a PLANNING.md file that includes vision, architecture, technology stack, and required tools list for this app."
+- **Prompt to create TASKS.md**: "Create a TASKS.md file with bullet points tasks divided into milestones for building this app."
+
+**Step 3: Configure CLAUDE.md**
+Add this language to your CLAUDE.md to ensure proper file usage:
+```markdown
+- **Always read** PLANNING.md at the start of a new conversation to understand the app's architecture, goals, tech stack, and constraints.
+- **Check** TASKS.md before starting work. If the task isn't listed, add it with a brief description and today's date.
+- **Mark completed tasks in** TASKS.md immediately after fully completing them.
+- **Add any new tasks** to TASKS.md.
+```
+
+**Step 4: Initiate Development**
+Start with this prompt:
+```
+Please read PLANNING.md, CLAUDE.md, and TASKS.md to understand the project. Then complete the first task on TASKS.md
+```
+Then interate through each task, clearing context often.
+
+#### Best Practices:
+
+**For Large Projects:**
+- Create nested CLAUDE.md, PLANNING.md, and TASKS.md files in subdirectories (backend/, frontend/, etc.)
+
+```
+~/.claude/CLAUDE.md        # (Global personal default settings)
+└── projects/
+    ├── CLAUDE.md          # (Project-wide instructions)
+    ├── backend/
+    │   ├── CLAUDE.md      # (Backend-specific context)
+    │   ├── PLANNING.md    # (Backend planning tasks)
+    │   └── TASKS.md       # (Backend actionable tasks)
+    ├── frontend/
+    │   ├── CLAUDE.md      # (Frontend-specific context)
+    │   ├── PLANNING.md    # (Frontend planning tasks)
+    │   └── TASKS.md       # (Frontend actionable tasks)
+    ├── docs/
+    │   ├── CLAUDE.md      # (Docs/internals guidelines)
+    │   ├── PLANNING.md    # (Docs planning tasks)
+    │   └── TASKS.md       # (Docs actionable tasks)
+    └── shared/
+        ├── CLAUDE.md      # (Shared utils/templates context)
+        ├── PLANNING.md    # (Shared planning tasks)
+        └── TASKS.md       # (Shared actionable tasks)
+```
+
+- Consider migrating tasks to Linear using the Linear MCP for better task management:
+  - Install Linear MCP in Claude Code with this command: `claude mcp add --transport sse linear-server https://mcp.linear.app/sse`
+  - Prompt to use: "Use the Linear MCP server to migrate all tasks (completed, in progress, and future tasks) from TASKS.md and any useful context from PLANNING.md and CLAUDE.md"
+
+**For Existing Codebases:**
+Use a high-context coding agent and model (e.g., Gemini CLI) to analyze your codebase:
+```
+Analyze this codebase to understand project structure, architecture, technology stack, and required tools. Please see [existing documentation] and generate a detailed PRD for this project. Also create a project status .md that details all work completed to-date and any new or future milestones/sprints left to complete.
+```
+
+**Important:** Keep these files distinct - they serve related but different purposes. Avoid overlap between CLAUDE, PLANNING, and TASKS files.
+
 ## 📁 Repository Contents
 
-- Sample CLAUDE.md file
+- Sample CLAUDE.md, PLANNING.md, TASKS.md, and PRD.md files
 - `agents/` - Custom subagent examples (coming in future episodes)
 - `commands/` - Custom slash command implementations (coming in future episodes)
 
@@ -131,7 +206,7 @@ claude --dangerously-skip-permissions
 
 ## 🤝 Contributing
 
-Have a great Claude Code tip or best practice? I'd love to feature it in a future video! Submit a PR with:
+Have a great Claude Code tip or best practice?  Have a question about how to use these tips in other coding agents (e.g., Gemini CLI, GPT 5 Codex, etc.)? I'd love to feature it in a future video! Submit a PR with:
 - Clear explanation of the technique
 - Working example
 - When/why to use it
